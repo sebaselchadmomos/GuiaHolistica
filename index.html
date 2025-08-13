@@ -231,18 +231,61 @@
             font-size: 1.2rem;
             margin-bottom: 30px;
             line-height: 1.8;
-            background-color: #f8f9ff;
-            padding: 20px;
-            border-radius: 10px;
             text-align: left;
+        }
+
+        .result-section {
+            background-color: #f8f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .result-icon {
+            font-size: 1.8rem;
+        }
+
+        .result-content {
+            padding-left: 35px;
+        }
+
+        .result-content ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        .result-content li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .result-content li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #4A4A8A;
         }
 
         .result-summary {
             background-color: #eef7ff;
             border-left: 4px solid #4A4A8A;
             padding: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
             border-radius: 0 10px 10px 0;
+            font-size: 1.1rem;
         }
 
         .whatsapp-btn {
@@ -343,6 +386,10 @@
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .result-content {
+                padding-left: 15px;
+            }
         }
     </style>
 </head>
@@ -406,7 +453,7 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
-                    <span>+54 9 11 3775-9542</span>
+                    <span>+54 9 11 1234-5678</span>
                 </div>
 
                 <div class="contact-item">
@@ -415,11 +462,8 @@
                 </div>
             </div>
             <div class="social-icons">
-
                 <a href="https://www.instagram.com/yess_energias" class="social-icon"><i
                         class="fab fa-instagram"></i></a>
-
-
             </div>
         </div>
     </footer>
@@ -449,24 +493,115 @@
         let userAnswers = [];
         let currentSection = 0;
         let currentQuestion = 0;
+        let finalResultKey = ''; // Variable para almacenar el resultado final
 
-        // Resultados posibles
+        // Resultados personalizados según tus especificaciones
         const results = {
             A: {
-                title: "Recomendación: Tarot 1 a 1",
-                text: "Según tus respuestas, la sesión de Tarot 1 a 1 sería ideal para ti. Esta sesión te brindará claridad sobre tu situación actual y te ayudará a entender las raíces de lo que estás experimentando. Podrás alinear tus acciones con tus deseos internos y obtener orientación para tomar decisiones más conscientes."
+                title: "Opción 1: TAROT 1 a 1 – Transformación y Conciencia",
+                html: `
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">💎</div>
+                            <h3>Qué es</h3>
+                        </div>
+                        <div class="result-content">
+                            <p>Una herramienta de transformación que funciona como un espejo del alma. No predice, sino que muestra lo que hoy no puedes ver con claridad. Te ayuda a comprender la raíz de lo que estás viviendo, ya sea un vínculo, un bloqueo laboral, una crisis personal o un proceso de crecimiento.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">🌀</div>
+                            <h3>Para qué sirve</h3>
+                        </div>
+                        <div class="result-content">
+                            <ul>
+                                <li>Iluminar patrones y creencias inconscientes.</li>
+                                <li>Ganar claridad para tomar decisiones.</li>
+                                <li>Pasar de la confusión a la acción consciente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">📄</div>
+                            <h3>Incluye</h3>
+                        </div>
+                        <div class="result-content">
+                            <ul>
+                                <li>Lectura personalizada.</li>
+                                <li>Informe en PDF con afirmaciones, ejercicios de journaling y rituales para integrar lo visto.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
             },
             B: {
-                title: "Recomendación: Limpieza Energética",
-                text: "Tus respuestas indican que la Limpieza Energética del Mapa Interno sería la opción más beneficiosa para ti. Esta técnica te ayudará a liberar las energías pesadas que llevas, disolver bloqueos y restaurar tu equilibrio energético. Experimentarás una sensación de alivio y reconexión contigo mismo/a."
+                title: "Opción 2: Limpieza Energética del Mapa Interno",
+                html: `
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">💎</div>
+                            <h3>Qué es</h3>
+                        </div>
+                        <div class="result-content">
+                            <p>Un trabajo profundo con tus energías internas, pensado para liberar bloqueos, cargas y tensiones que afectan tu bienestar. Si vienes sintiendo síntomas como cansancio persistente, emociones densas o sensación de “peso” interno, este espacio ayuda a aligerarte.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">🌀</div>
+                            <h3>Para qué sirve</h3>
+                        </div>
+                        <div class="result-content">
+                            <ul>
+                                <li>Reequilibrar tu campo energético.</li>
+                                <li>Aliviar sensaciones de carga o agotamiento sin causa aparente.</li>
+                                <li>Detectar y liberar patrones energéticos que te bloquean.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">📄</div>
+                            <h3>Incluye</h3>
+                        </div>
+                        <div class="result-content">
+                            <ul>
+                                <li>Detección de bloqueos energéticos.</li>
+                                <li>Limpieza y armonización con técnicas específicas.</li>
+                                <li>Informe PDF con la información canalizada de la sesión.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
             },
             C: {
-                title: "Recomendación: Paquete Completo",
-                text: "Tus respuestas sugieren que te beneficiarías enormemente de nuestro Paquete Completo que incluye tanto el Tarot 1 a 1 como la Limpieza Energética. Este abordaje integral te proporcionará claridad sobre tu situación actual mientras liberas bloqueos energéticos, creando un poderoso cambio en tu vida."
+                title: "Opción 3: Combinado – Limpieza + Tarot",
+                html: `
+                    <div class="result-section">
+                        <div class="result-header">
+                            <div class="result-icon">💎</div>
+                            <h3>Qué es</h3>
+                        </div>
+                        <div class="result-content">
+                            <p>Un proceso que une el trabajo energético y la claridad consciente. Primero limpiamos y reequilibramos tu energía para que puedas recibir el mensaje del tarot sin interferencias. Luego, en la sesión de tarot, vemos el mapa interno con claridad para que puedas ir a la acción con fuerza renovada.</p>
+                            <p class="result-summary">Ideal si:</p>
+                            <ul>
+                                <li>Respondiste que sí a ambas secciones.</li>
+                                <li>Quieres un abordaje integral para este momento de tu vida.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
             },
             default: {
                 title: "Recomendación: Consulta Personalizada",
-                text: "Basado en tus respuestas, te recomendamos una consulta personalizada para determinar el mejor camino para ti. Durante esta sesión, analizaremos tus necesidades específicas y crearemos un plan a medida que te ayude a alcanzar tus objetivos y mejorar tu bienestar."
+                html: `<p>Basado en tus respuestas, te recomendamos una consulta personalizada para determinar el mejor camino para ti. Durante esta sesión, analizaremos tus necesidades específicas y crearemos un plan a medida que te ayude a alcanzar tus objetivos y mejorar tu bienestar.</p>`
             }
         };
 
@@ -621,11 +756,18 @@
                 resultKey = 'C';
             }
 
-            // Mostrar resultado
+            // Guardar el resultado final para WhatsApp
+            finalResultKey = resultKey;
+
+            // Obtener resultado
             const result = results[resultKey];
+
+            // Mostrar resultado
             document.getElementById('resultText').innerHTML = `
-                <h3>${result.title}</h3>
-                <p>${result.text}</p>
+                <h3 style="text-align: center; margin-bottom: 25px; color: #4A4A8A; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;">
+                    ${result.title}
+                </h3>
+                ${result.html}
                 <div class="result-summary">
                     <p><strong>Resumen de tu evaluación:</strong></p>
                     <p>• Sección 1 (Tarot): ${section1Yes}/3 respuestas afirmativas</p>
@@ -642,19 +784,14 @@
             const phoneNumber = "5491137759542";
 
             // Obtener el resultado
-            const resultTitle = document.querySelector('#resultText h3').textContent;
-            const resultDescription = document.querySelector('#resultText p').textContent;
+            const result = results[finalResultKey];
 
             // Crear mensaje solo con el resultado
             let message = `¡Hola! He completado el cuestionario de Yess Energías.
             
 Mi resultado es el siguiente:
 
-*${resultTitle}*
-
-${resultDescription}
-
-Por favor, contacten conmigo para más información. ¡Gracias!`;
+*${result.title}*`;
 
             // Crear enlace de WhatsApp
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -667,6 +804,5 @@ Por favor, contacten conmigo para más información. ¡Gracias!`;
         window.onload = initQuiz;
     </script>
 </body>
-
 
 </html>
